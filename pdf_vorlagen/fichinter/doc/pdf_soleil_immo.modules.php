@@ -23,7 +23,7 @@
  */
 
 /**
- *	\file       htdocs/core/modules/fichinter/doc/pdf_soleil.modules.php
+ *	\file       htdocs/core/modules/fichinter/doc/pdf_immo.modules.php
  *	\ingroup    ficheinter
  *	\brief      File of Class to build interventions documents with model Soleil
  */
@@ -42,7 +42,7 @@ if (!empty($conf->project->enabled)) {
 /**
  *	Class to build interventions documents with model Soleil
  */
-class pdf_soleil_objekte extends ModelePDFFicheinter
+class pdf_soleil_immo extends ModelePDFFicheinter
 {
 	 /**
 	  * @var DoliDb Database handler
@@ -132,7 +132,7 @@ class pdf_soleil_objekte extends ModelePDFFicheinter
 		global $conf, $langs, $mysoc;
 
 		$this->db = $db;
-		$this->name = 'soleil_objekte';
+		$this->name = 'soleil_immo';
 		$this->description = $langs->trans("DocumentModelStandardPDF");
 		$this->update_main_doc_field = 1; // Save the name of generated file as the main doc when generating a doc with this template
 
