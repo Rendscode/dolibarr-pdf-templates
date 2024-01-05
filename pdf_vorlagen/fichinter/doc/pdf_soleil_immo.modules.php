@@ -36,7 +36,8 @@ if (!empty($conf->project->enabled)) {
    require_once DOL_DOCUMENT_ROOT.'/projet/class/project.class.php';
    require_once DOL_DOCUMENT_ROOT.'/core/class/html.formprojet.class.php';
  }
-//require_once DOL_DOCUMENT_ROOT.'/project/class/project.class.php'; // vs. wieder entfernen
+require_once DOL_DOCUMENT_ROOT.'/contrat/class/contrat.class.php'; // vs. wieder entfernen
+require_once DOL_DOCUMENT_ROOT.'/core/class/html.formcontract.class.php';// vs. wieder entfernen
 
 
 /**
@@ -289,11 +290,22 @@ class pdf_soleil_immo extends ModelePDFFicheinter
 //                $this->db->end();
                 $rowi = ((int) $object->fk_project); // ID vom Projekt, im Kontext dieser Datei vorhanden
 //                var_dump($rowi);
-                $zuz = $this->db->query("SELECT llx_projet.title FROM `".MAIN_DB_PREFIX."projet` WHERE llx_projet.rowid = ".$rowi); //Abfrage des Projektnamens (title) aus der Datenbank. Rückgabe ist ein Objekt! Hier noch an allen Stellen .MAIN_DB_PPREFIX. ersetzen
-//                var_dump($zuz);
+				$rowj = ((int) $object->fk_contrat); // ID vom Projekt, im Kontext dieser Datei vorhanden
+//				var_dump($rowj);
+				$zuz = $this->db->query("SELECT llx_projet.title FROM `".MAIN_DB_PREFIX."projet` WHERE llx_projet.rowid = ".$rowi); //Abfrage des Projektnamens (title) aus der Datenbank. Rückgabe ist ein Objekt! Hier noch an allen Stellen .MAIN_DB_PPREFIX. ersetzen
+
+// 				try {
+// 					$zuz2 = $this->db->query("SELECT llx_contratdet.label FROM `".MAIN_DB_PREFIX."contradet` WHERE llx_contradet.rowid = ".$rowj); //Abfrage des Projektnamens (title) aus der Datenbank. Rückgabe ist ein Objekt! Hier noch an allen Stellen .MAIN_DB_PPREFIX. ersetzen
+// //              	 var_dump($zuz);
+// 				} catch (Exception $e) {
+//    					echo 'Exception abgefangen: ',  $e->getMessage(), "\n";
+// 				//    var_dump($e->getMessage());
+// 				}
+				
 //                var_dump(MAIN_DB_PREFIX); //'llx_'
-                $tut = $this->db->fetch_object($zuz); // Aus dem Objekt die eigentlichen Daten holen (gesamter Satz)
+               	  $tut = $this->db->fetch_object($zuz); // Aus dem Objekt die eigentlichen Daten holen (gesamter Satz)
 //                var_dump($tut->title); // (Projektnamen extrahieren)
+//					var_dump($tut);
 //                var_dump($object->fk_project);
 //                var_dump($conf->project);
 //                var_dump($objectline);
