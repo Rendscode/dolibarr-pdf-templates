@@ -1,0 +1,2 @@
+SELECT llx_contratdet.label FROM `llx_contratdet` WHERE llx_contratdet.rowid = 10
+SELECT llx_contrat.ref FROM `llx_contrat` WHERE llx_contrat.rowid = 10
