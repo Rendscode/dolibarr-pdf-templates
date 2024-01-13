@@ -36,8 +36,11 @@ if (!empty($conf->project->enabled)) {
    require_once DOL_DOCUMENT_ROOT.'/projet/class/project.class.php';
    require_once DOL_DOCUMENT_ROOT.'/core/class/html.formprojet.class.php';
  }
+
 require_once DOL_DOCUMENT_ROOT.'/contrat/class/contrat.class.php'; // vs. wieder entfernen
 require_once DOL_DOCUMENT_ROOT.'/core/class/html.formcontract.class.php';// vs. wieder entfernen
+require_once DOL_DOCUMENT_ROOT.'/projet/class/project.class.php'; // vs. wieder entfernen
+require_once DOL_DOCUMENT_ROOT.'/core/class/html.formprojet.class.php';// vs. wieder entfernen
 
 
 /**
@@ -292,12 +295,18 @@ class pdf_soleil_immo extends ModelePDFFicheinter
             //    var_dump($rowi);
 				$rowj = ((int) $object->fk_contrat); // ID vom Projekt, im Kontext dieser Datei vorhanden
 				// var_dump($rowj);
+				$rowk = ((int) $object->fk_project); // ID vom Projekt, im Kontext dieser Datei vorhanden
+				var_dump($rowk);
 				$zuz = $this->db->query("SELECT llx_projet.title FROM `".MAIN_DB_PREFIX."projet` WHERE llx_projet.rowid = ".$rowi); //Abfrage des Projektnamens (title) aus der Datenbank. Rückgabe ist ein Objekt! Hier noch an allen Stellen .MAIN_DB_PPREFIX. ersetzen
 
 				try {
 					$zuz2 = $this->db->query("SELECT ref FROM `".MAIN_DB_PREFIX."contrat` WHERE llx_contrat.rowid = ".$rowj); //Abfrage des Projektnamens (title) aus der Datenbank. Rückgabe ist ein Objekt! Hier noch an allen Stellen .MAIN_DB_PPREFIX. ersetzen
              	 	if (!$zuz2) {
-						throw new Exception('Datenbankabfrage gescheitert.');
+						throw new Exception('Datenbankabfrage gescheitert: zuz2.');}
+					$zuz3 = $this->db->query("SELECT description FROM `".MAIN_DB_PREFIX."projet` WHERE llx_projet.rowid = ".$rowk); //Abfrage des Projektnamens (title) aus der Datenbank. Rückgabe ist ein Objekt! Hier noch an allen Stellen .MAIN_DB_PPREFIX. ersetzen
+					if (!$zuz3) {
+						throw new Exception('Datenbankabfrage gescheitert: zuz3.');
+  
 					}
 				} catch (Exception $e) {
 
@@ -308,7 +317,8 @@ class pdf_soleil_immo extends ModelePDFFicheinter
 //                var_dump(MAIN_DB_PREFIX); //'llx_'
                	  $tut = $this->db->fetch_object($zuz); // Aus dem Objekt die eigentlichen Daten holen (gesamter Satz)
 				  $tut2 = $this->db->fetch_object($zuz2); // Aus dem Objekt die eigentlichen Daten holen (gesamter Satz)
-				  var_dump($tut2);
+				  $tut3 = $this->db->fetch_object($zuz3); // Aus dem Objekt die eigentlichen Daten holen (gesamter Satz)
+				  var_dump($tut3);
 //                var_dump($tut->title); // (Projektnamen extrahieren)
 //					var_dump($tut);
 //                var_dump($object->fk_project);
@@ -319,7 +329,7 @@ class pdf_soleil_immo extends ModelePDFFicheinter
 //                var_dump($object->note_public);
 //                var_dump($object->fields["fk_projet"]["label"]);
 //                var_dump($mysoc);
-				$projtoshow = empty($object->fk_project) ? 'Objekt: nicht eingetragen' : 'Objekt: '.$tut->title.' | Vertragnr. '.$tut2->ref;
+				$projtoshow = empty($object->fk_project) ? 'Objekt: nicht eingetragen' : 'Objekt: '.$tut->title.' | Vertragnr. '.$tut2->ref.' | Beschreibung '.$tut3->description;
 				if ($projtoshow) {
 					$substitutionarray = pdf_getSubstitutionArray($outputlangs, null, $object);
 					complete_substitutions_array($substitutionarray, $outputlangs, $object);
