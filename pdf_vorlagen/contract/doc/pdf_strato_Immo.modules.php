@@ -33,12 +33,14 @@ require_once DOL_DOCUMENT_ROOT.'/core/lib/company.lib.php';
 require_once DOL_DOCUMENT_ROOT.'/core/lib/pdf.lib.php';
 require_once DOL_DOCUMENT_ROOT.'/core/lib/date.lib.php';
 require_once DOL_DOCUMENT_ROOT.'/product/class/product.class.php';
+require_once DOL_DOCUMENT_ROOT.'/projet/class/project.class.php'; // vs. wieder entfernen
+require_once DOL_DOCUMENT_ROOT.'/core/class/html.formprojet.class.php';// vs. wieder entfernen
 
 
 /**
  *	Class to build contracts documents with model Strato
  */
-class pdf_strato extends ModelePDFContract
+class pdf_strato_Immo extends ModelePDFContract
 {
 	/**
 	 * @var DoliDb Database handler
@@ -92,7 +94,7 @@ class pdf_strato extends ModelePDFContract
 		global $langs, $mysoc;
 
 		$this->db = $db;
-		$this->name = 'strato';
+		$this->name = 'strato_Immo';
 		$this->description = $langs->trans("StandardContractsTemplate");
 		$this->update_main_doc_field = 1; // Save the name of generated file as the main doc when generating a doc with this template
 
