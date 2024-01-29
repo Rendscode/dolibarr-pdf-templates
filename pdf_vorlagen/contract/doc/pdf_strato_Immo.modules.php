@@ -260,6 +260,52 @@ class pdf_strato_Immo extends ModelePDFContract
 				$tab_top = 90;
 				$tab_top_newpage = (!getDolGlobalInt('MAIN_PDF_DONOTREPEAT_HEAD') ? 42 : 10);
 
+				// strato_Immo: additional dates
+				$rowi = ((int) $object->fk_project); // ID vom Projekt, im Kontext dieser Datei vorhanden
+				//    var_dump($rowi);
+				// $rowj = ((int) $object->fk_contrat); // ID vom Projekt, im Kontext dieser Datei vorhanden
+
+				$zuz = $this->db->query("SELECT llx_projet.title FROM `".MAIN_DB_PREFIX."projet` WHERE llx_projet.rowid = ".$rowi); //Abfrage des Projektnamens (title) aus der Datenbank. Rückgabe ist ein Objekt! Hier noch an allen Stellen .MAIN_DB_PPREFIX. ersetzen
+				$tut = $this->db->fetch_object($zuz); // Aus dem Objekt die eigentlichen Daten holen (gesamter Satz)
+
+				try {
+					$zuz3 = $this->db->query("SELECT description FROM `".MAIN_DB_PREFIX."projet` WHERE llx_projet.rowid = ".$rowi); //Abfrage des Projektnamens (title) aus der Datenbank. Rückgabe ist ein Objekt! Hier noch an allen Stellen .MAIN_DB_PPREFIX. ersetzen
+					if (!$zuz3) {
+						throw new Exception('Datenbankabfrage gescheitert: zuz3.');
+  
+					}
+				} catch (Exception $e) {
+
+   					echo 'Exception abgefangen: ',  $e->getMessage(), "\n";
+				}
+				// var_dump($zuz2);
+				$tut3 = $this->db->fetch_object($zuz3); // Aus dem Objekt die eigentlichen Daten holen (gesamter Satz)
+				// var_dump($tut3);
+
+				$projtoshow = empty($object->fk_project) ? 'Objekt: nicht eingetragen' : 'Objekt: '.$tut->title.' | Beschreibung '.$tut3->description;
+				if ($projtoshow) {
+					$substitutionarray = pdf_getSubstitutionArray($outputlangs, null, $object);
+					complete_substitutions_array($substitutionarray, $outputlangs, $object);
+					$projtoshow = make_substitutions($projtoshow, $substitutionarray, $outputlangs);
+					$projtoshow = convertBackOfficeMediasLinksToPublicLinks($projtoshow);
+
+					$tab_top = 88;
+
+					$pdf->SetFont('', '', $default_font_size - 1);
+					$pdf->writeHTMLCell(190, 3, $this->posxdesc - 1, $tab_top, dol_htmlentitiesbr($projtoshow), 0, 1); // 190: zugestandene Zeilenbreite
+					$nexY = $pdf->GetY();
+					$height_note = $nexY - $tab_top;
+
+					// Rect takes a length in 3rd parameter
+					$pdf->SetDrawColor(1, 192, 192); // erster Wert muss auch 192 sein!
+					$pdf->Rect($this->marge_gauche, $tab_top - 1, $this->page_largeur - $this->marge_gauche - $this->marge_droite, $height_note + 1);
+
+					$tab_height = $tab_height - $height_note;
+					$tab_top = $nexY + 6;
+				} else {
+					$height_note = 0;
+				}
+
 				// Display notes
 				if (!empty($object->note_public)) {
 					$tab_top -= 2;
