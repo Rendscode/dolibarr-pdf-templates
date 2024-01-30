@@ -286,7 +286,7 @@ class pdf_strato_Immo extends ModelePDFContract
 
 				// Abschnitt für Kategorien
 				try {
-					$zuz = $this->db->query("SELECT fk_categorie FROM `".MAIN_DB_PREFIX."categorie_project` WHERE llx_projet.rowid = ".$rowi); //Abfrage des Projektnamens (title) aus der Datenbank. Rückgabe ist ein Objekt! Hier noch an allen Stellen .MAIN_DB_PPREFIX. ersetzen
+					$zuz = $this->db->query("SELECT fk_categorie FROM `".MAIN_DB_PREFIX."categorie_project` WHERE llx_categorie_project.fk_project = ".$rowi); //Abfrage des Projektnamens (title) aus der Datenbank. Rückgabe ist ein Objekt! Hier noch an allen Stellen .MAIN_DB_PPREFIX. ersetzen
 					// $zuz3 = $this->db->query("SELECT description FROM `".MAIN_DB_PREFIX."projet` WHERE llx_projet.rowid = ".$rowi); //Abfrage des Projektnamens (title) aus der Datenbank. Rückgabe ist ein Objekt! Hier noch an allen Stellen .MAIN_DB_PPREFIX. ersetzen
 					if (!$zuz) {
 						throw new Exception('Datenbankabfrage gescheitert (Kategorien): zuz.');
