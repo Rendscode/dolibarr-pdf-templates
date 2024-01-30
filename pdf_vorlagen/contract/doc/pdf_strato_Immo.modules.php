@@ -297,6 +297,11 @@ class pdf_strato_Immo extends ModelePDFContract
    					echo 'Exception abgefangen: ',  $e->getMessage(), "\n";
 				}
 				var_dump($zuz);
+				echo " Zzzz ";
+				$tutcat = $this->db->fetch_object($zuz); // Aus dem Objekt die eigentlichen Daten holen (gesamter Satz)
+				var_dump($tutcat->fk_categorie);
+				#echo 1/0;
+				
 
 				$projtoshow = empty($object->fk_project) ? 'Objekt: nicht eingetragen' : 'Objekt: '.$tut->title.' | Beschreibung '.$tut3->description;
 				if ($projtoshow) {
