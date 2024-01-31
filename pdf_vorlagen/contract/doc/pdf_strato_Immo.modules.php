@@ -287,6 +287,10 @@ class pdf_strato_Immo extends ModelePDFContract
 				// Abschnitt für Kategorien
 				try {
 					$zuz = $this->db->query("SELECT fk_categorie FROM `".MAIN_DB_PREFIX."categorie_project` WHERE llx_categorie_project.fk_project = ".$rowi); //Abfrage des Projektnamens (title) aus der Datenbank. Rückgabe ist ein Objekt! Hier noch an allen Stellen .MAIN_DB_PPREFIX. ersetzen
+					// SELECT label FROM `llx_categorie` WHERE rowid IN (SELECT fk_categorie FROM llx_categorie_project WHERE llx_categorie_project.fk_project = 12);
+					// $zuz = $this->db->query("SELECT llx_categorie.label FROM `".MAIN_DB_PREFIX."categorie` WHERE llx_categorie.rowid IN (SELECT llx_categorie_project.fk_categorie FROM `".MAIN_DB_PREFIX."categorie_project` WHERE llx_categorie_project.fk_project = ".$rowi); //Abfrage des Projektnamens (title) aus der Datenbank. Rückgabe ist ein Objekt! Hier noch an allen Stellen .MAIN_DB_PPREFIX. ersetzen
+					// $zuz = $this->db->query("SELECT llx_categorie.label FROM `".MAIN_DB_PREFIX."categorie` WHERE llx_categorie.rowid IN ".$zuz); //Abfrage des Projektnamens (title) aus der Datenbank. Rückgabe ist ein Objekt! Hier noch an allen Stellen .MAIN_DB_PPREFIX. ersetzen
+
 					// $zuz3 = $this->db->query("SELECT description FROM `".MAIN_DB_PREFIX."projet` WHERE llx_projet.rowid = ".$rowi); //Abfrage des Projektnamens (title) aus der Datenbank. Rückgabe ist ein Objekt! Hier noch an allen Stellen .MAIN_DB_PPREFIX. ersetzen
 					if (!$zuz) {
 						throw new Exception('Datenbankabfrage gescheitert (Kategorien): zuz.');
@@ -296,11 +300,11 @@ class pdf_strato_Immo extends ModelePDFContract
 
    					echo 'Exception abgefangen: ',  $e->getMessage(), "\n";
 				}
-				var_dump($zuz);
-				echo " Zzzz ";
+				var_dump($zuz); 
+				// echo "<br>";
 				$tutcat = $this->db->fetch_object($zuz); // Aus dem Objekt die eigentlichen Daten holen (gesamter Satz)
 				var_dump($tutcat->fk_categorie);
-				#echo 1/0;
+				// echo 1/0;
 				
 
 				$projtoshow = empty($object->fk_project) ? 'Objekt: nicht eingetragen' : 'Objekt: '.$tut->title.' | Beschreibung '.$tut3->description;
