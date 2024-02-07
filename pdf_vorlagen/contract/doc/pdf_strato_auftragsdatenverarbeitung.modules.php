@@ -263,7 +263,7 @@ class pdf_strato extends ModelePDFContract
 					$tab_top -= 2;
 
 					$pdf->SetFont('', '', $default_font_size - 1);
-					$pdf->writeHTMLCell(190, 3, $this->posxdesc - 1, $tab_top - 1, dol_htmlentitiesbr($object->note_public), 0, 1);
+					$pdf->writeHTMLCell(190, 3, $this->posxdesc - 1, $tab_top - 1, dol_htmlentitiesbr($object->note_public), 0, 1); //hier Erwähnung von eRecht 24
 					$nexY = $pdf->GetY();
 					$height_note = $nexY - $tab_top;
 
