@@ -289,7 +289,11 @@ class pdf_strato_Immo extends ModelePDFContract
 					$zuz = $this->db->query("SELECT fk_categorie FROM `".MAIN_DB_PREFIX."categorie_project` WHERE llx_categorie_project.fk_project = ".$rowi); //Abfrage des Projektnamens (title) aus der Datenbank. Rückgabe ist ein Objekt! Hier noch an allen Stellen .MAIN_DB_PPREFIX. ersetzen
 					// SELECT label FROM `llx_categorie` WHERE rowid IN (SELECT fk_categorie FROM llx_categorie_project WHERE llx_categorie_project.fk_project = 12);
 					// $zuz = $this->db->query("SELECT llx_categorie.label FROM `".MAIN_DB_PREFIX."categorie` WHERE llx_categorie.rowid IN (SELECT llx_categorie_project.fk_categorie FROM `".MAIN_DB_PREFIX."categorie_project` WHERE llx_categorie_project.fk_project = ".$rowi); //Abfrage des Projektnamens (title) aus der Datenbank. Rückgabe ist ein Objekt! Hier noch an allen Stellen .MAIN_DB_PPREFIX. ersetzen
-					// $zuz = $this->db->query("SELECT llx_categorie.label FROM `".MAIN_DB_PREFIX."categorie` WHERE llx_categorie.rowid IN ".$zuz); //Abfrage des Projektnamens (title) aus der Datenbank. Rückgabe ist ein Objekt! Hier noch an allen Stellen .MAIN_DB_PPREFIX. ersetzen
+					var_dump($zuz); 
+					$tutcat = $this->db->fetch_object($zuz);
+					var_dump($tutcat);
+					// echo 1/0;
+					$zuz = $this->db->query("SELECT llx_categorie.label FROM `".MAIN_DB_PREFIX."categorie` WHERE llx_categorie.rowid IN ".$tucat->fk_categorie); //Abfrage des Projektnamens (title) aus der Datenbank. Rückgabe ist ein Objekt! Hier noch an allen Stellen .MAIN_DB_PPREFIX. ersetzen
 
 					// $zuz3 = $this->db->query("SELECT description FROM `".MAIN_DB_PREFIX."projet` WHERE llx_projet.rowid = ".$rowi); //Abfrage des Projektnamens (title) aus der Datenbank. Rückgabe ist ein Objekt! Hier noch an allen Stellen .MAIN_DB_PPREFIX. ersetzen
 					if (!$zuz) {
