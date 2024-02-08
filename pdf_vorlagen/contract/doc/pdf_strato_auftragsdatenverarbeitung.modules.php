@@ -38,7 +38,7 @@ require_once DOL_DOCUMENT_ROOT.'/product/class/product.class.php';
 /**
  *	Class to build contracts documents with model Strato
  */
-class pdf_strato extends ModelePDFContract
+class pdf_strato_auftragsdatenverarbeitung extends ModelePDFContract
 {
 	/**
 	 * @var DoliDb Database handler
@@ -92,7 +92,7 @@ class pdf_strato extends ModelePDFContract
 		global $langs, $mysoc;
 
 		$this->db = $db;
-		$this->name = 'strato';
+		$this->name = 'strato_auftragsdatenverarbeitung';
 		$this->description = $langs->trans("StandardContractsTemplate");
 		$this->update_main_doc_field = 1; // Save the name of generated file as the main doc when generating a doc with this template
 
